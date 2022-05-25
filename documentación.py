@@ -25,7 +25,7 @@ Menú con las siguientes opciones:
 		 - crear un nuevo tema
 		 - añadir preguntas y respuestas a un tema ya existente 
 
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
