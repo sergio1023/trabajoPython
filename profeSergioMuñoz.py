@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import MySQLdb
 
-conectabd=MySQLdb.connect(host='localhost',user='profe',passwd='profe',db='testSergio')
-consulta=conectabd.consulta()
+conn=MySQLdb.connect(host='localhost',user='profe',passwd='profe',db='testSergio')
+cursor=conn.cursor()
 
 nombre = input("Nombre del alumno: ")
 
@@ -21,6 +22,16 @@ def numero():
             print('Error, introduce un numero entero')
      
     return num
+    
+def listacoches():
+				query="select pregcoches from coches" 
+				cursor.execute(query)
+				todo=cursor.fetchall()
+				cadena="PREGUNTA\n"
+				for reg in todo:
+					cadena+=reg[0]+"\n\n"
+					random.Shuffle('listacoches')
+				
  
 salir = False
 opcion = 0
@@ -42,11 +53,10 @@ while not salir:
 		materia = numero()
 		if materia == 1:
 			print ("")
-			print ("Preparando examen para ", nombre ,"del tema de Coches")
+			print ("Preparando examen para", nombre ,"del tema de Coches")
 			print ("")
-			query="select pregoches from coches" 
-			consulta.execute(query)
-			conectabd.commit()
+			listacoches():
+			# Esto es para insert o update para actualizar conectabd.commit()
 		elif materia == 2:
 			print ("")
 			print ("Preparando examen para ", nombre ,"del tema de Hardware")
