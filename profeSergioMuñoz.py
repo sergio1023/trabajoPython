@@ -120,6 +120,13 @@ while not salir:
 			salir = True
 	elif opcion == 2:
 		print ("Crearás un nuevo tema o añadirás preguntas y respuestas a un tema existente ")
+		print("1. Crea nuevo tema")
+		print("2. Añade preguntas y respuestas")
+		opcion2 = numero()
+		if opcion2 == 1:
+			print("crear")
+		if opcion2 == 2:
+			print("añadir")
 			 #crear un nuevo tema
 			 #añadir preguntas y respuestas a un tema ya existente
 	elif opcion == 3:
@@ -131,3 +138,13 @@ while not salir:
 # De la pregunta 11 a la 12 https://buen-saber.com/quiz/historia-de-espana/
 # Página respuestas redes https://cibertest.com/examen-online/580/redes-basico
 # Página respuestas hardware https://cibertest.com/examen-online/2324/partes-de-una-computadora
+
+
+#Consulta de respuestas verdaderas de historia
+
+''' 
+select h.idresphistoria , h.preghistoria , r.respuestas
+from respuestashistoria r, historia h
+where h.idresphistoria = joinhistoria
+and correctas_historia = 'v';
+'''
