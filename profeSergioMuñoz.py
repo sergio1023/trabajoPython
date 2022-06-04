@@ -32,10 +32,22 @@ def listacoches():
 				lista_todo=[]
 				for registro1 in todo:
 					lista_todo.append(registro1)
-				random.shuffle(lista_todo)
+					random.shuffle(lista_todo)
 				for registrocoches in lista_todo:
 					cadena+="\n"+registrocoches[0]+"\n\n"
 					print(cadena)
+					query2="select respuestas from respuestascoches" 
+					cursor.execute(query2)
+					todo2=cursor.fetchall()
+					cadena2="RESPUESTA\n"
+					lista_todo2=[]
+					for registropreg1 in todo2:
+						lista_todo2.append(registropreg1)
+						random.shuffle(lista_todo2)
+					for registropregcoches in lista_todo2:
+						cadena2+="\n"+registropregcoches[0]+"\n\n"
+						print(cadena2)
+					
 					
 def listahardware():
 				query="select preghardware from hardware" 
@@ -45,7 +57,7 @@ def listahardware():
 				lista_todo=[]
 				for registro2 in todo:
 					lista_todo.append(registro2)
-				random.shuffle(lista_todo)
+					random.shuffle(lista_todo)
 				for registrohardware in lista_todo:
 					cadena+="\n"+registrohardware[0]+"\n\n"
 					print(cadena)
@@ -58,7 +70,7 @@ def listahistoria():
 				lista_todo=[]
 				for registro3 in todo:
 					lista_todo.append(registro3)
-				random.shuffle(lista_todo)
+					random.shuffle(lista_todo)
 				for registrohistoria in lista_todo:
 					cadena+="\n"+registrohistoria[0]+"\n\n"
 					print(cadena)
@@ -71,10 +83,25 @@ def listaredes():
 				lista_todo=[]
 				for registro4 in todo:
 					lista_todo.append(registro4)
-				random.shuffle(lista_todo)
+					random.shuffle(lista_todo)
 				for registroredes in lista_todo:
 					cadena+="\n"+registroredes[0]+"\n\n"
 					print(cadena)
+
+'''				
+def creartema():
+				query="create table" , nuevotema , "(id",nuevotema,"int PRIMARY KEY);"
+				cursor.execute(query)
+				print("Estos serán los temas")
+				print("")
+				query2="show tables"
+				cursor2.execute(query2)
+				todo=cursor.fetchall()
+				cadena="TEMAS\n"
+				for registro9 in todo:
+					cadena+="\n"+registro9[0]+"\n\n"
+					print(cadena)
+'''
 
 salir = False
 opcion = 0
@@ -124,7 +151,9 @@ while not salir:
 		print("2. Añade preguntas y respuestas")
 		opcion2 = numero()
 		if opcion2 == 1:
-			print("crear")
+			print("")
+			nuevotema = input("Escribe el nuevo tema: ")
+			creartema()
 		if opcion2 == 2:
 			print("añadir")
 			 #crear un nuevo tema
