@@ -90,7 +90,7 @@ def listaredes():
 
 '''				
 def creartema():
-				query="create table" , nuevotema , "(id",nuevotema,"int PRIMARY KEY);"
+				query="create table" , nuevotema , "(id",nuevotema,"int PRIMARY KEY)"
 				cursor.execute(query)
 				print("Estos serán los temas")
 				print("")
@@ -155,8 +155,46 @@ while not salir:
 			nuevotema = input("Escribe el nuevo tema: ")
 			creartema()
 		if opcion2 == 2:
-			print("añadir")
-			 #crear un nuevo tema
+			print ("¿Sobre qué tema quieres añadir preguntas?")
+			print("")
+			print ("1. Coches")
+			print ("2. Hardware")
+			print ("3. Historia de España")
+			print ("4. Redes")
+			añadirpreguntas = numero()
+			if añadirpreguntas == 1:
+				print("")
+				preguntacoches=input("Escribe la pregunta a añadir: ")
+				print("")
+				respuesta1coches=input("1. Escribe 1 respuesta: ")
+				print("")
+				respuesta2coches=input("2. Escribe 1 respuesta: ")
+				print("")
+				respuesta3coches=input("3. Escribe 1 respuesta: ")
+				print("")
+				respuesta4coches=input("4. Escribe 1 respuesta: ")
+				querypreguntascoches="insert into coches values ('preguntacoches')"
+				cursor.execute(querypreguntascoches)
+				conn.commit()
+				queryrespuestascoches1="insert into respuestascoches ('respuestas') values ('respuesta1coches')"
+				cursor.execute(queryrespuestascoches1)
+				conn.commit()
+				queryrespuestascoches2="insert into respuestascoches ('respuestas') values ('respuesta2coches')"
+				cursor.execute(queryrespuestascoches2)
+				conn.commit()
+				queryrespuestascoches3="insert into respuestascoches ('respuestas') values ('respuesta3coches')"
+				cursor.execute(queryrespuestascoches3)
+				conn.commit()
+				queryrespuestascoches4="insert into respuestascoches ('respuestas') values ('respuesta3coches')"
+				cursor.execute(queryrespuestascoches4)
+				conn.commit()		
+			# Esto es para insert o update para actualizar conectabd.commit()
+			elif añadirpreguntas == 2:
+				print("tema")
+			elif añadirpreguntas == 3:
+				print("tema")
+			elif añadirpreguntas == 4:
+				print("tema")
 			 #añadir preguntas y respuestas a un tema ya existente
 	elif opcion == 3:
 		salir = True
