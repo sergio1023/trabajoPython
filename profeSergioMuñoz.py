@@ -24,78 +24,141 @@ def numero():
     return num
     
 def listacoches():
-	contador = 0
-	for registrocoches in range(1,10):
-		query="select pregcoches from coches where id_respcoches = %(id)s"  
-		cursor.execute(query, {'id' : registrocoches })
+	contadorcoches = 0
+	for registrocoches in range(1,11):
+		query="select * from coches where idrespcoches = %(id)s"  
+		cursor.execute(query, { 'id' : registrocoches })
 		todo=cursor.fetchall()
-		lista_todo=[]
-		for registro1 in todo:
-			lista_todo.append(registro1)
-			random.shuffle(lista_todo)
-		for registrocoches in lista_todo:
-			print(registrocoches[0])
-		print ("############################################")
-		respuesta="select respuestas from respuestascoches where idrespcoches = %(id)s "
-		cursor.execute(respuesta , {'id' : })
-		todorespuestas=cursor.fetchall()	
-		for respuestas in todorespuestas:
-			print(respuestas[0])
+		lista=[]
+		for registro10 in todo:
+			lista.append(registro10)
+			random.shuffle(lista)
+		for registropreguntas in lista:
+			print(registropreguntas[0])
+		respuesta="select * from respuestascoches where joincoches = %(id)s"
+		cursor.execute(respuesta , { 'id' : registrocoches })
+		todorespuestas=cursor.fetchall()
+		lista2=[]
+		for registro1010 in todorespuestas:
+			lista2.append(registro1010)
+			random.shuffle(lista2)
+		for respuestas in lista2:
+			print(respuestas[4],respuestas[1],sep=". ")
 			
-		solucion = input("Solucion: ")
-		
-		
-		'''correcta = "SELECT * FROM respuesta_coches WHERE idrespuesta_coches2 = %(id)s and letra_coche = %(sol)s"
-		cursor.execute(correcta, { 'id': i, 'sol': solucion })
-		letracorrecta = cursor.fetchone()
-		print (letracorrecta[4])
-		
-		
-		if letracorrecta[4] == "correcta":
-			cont = cont + 1	'''
+		solucion = int(input("Elige número: "))
+		respuestacorrecta = "select * from respuestascoches where joincoches = %(id)s and soluciones = %(sol)s"
+		cursor.execute(respuestacorrecta, { 'id': registrocoches, 'sol': solucion })
+		numerocorrecto = cursor.fetchone()	
+		print("")
+
+		if numerocorrecto[3] == "v":
+			contadorcoches = contadorcoches + 1
 	
-	print ("Su nota total es,", contador)
+	print("La nota final es,", contadorcoches)
 	print("")
 
 
 def listahardware():
-				query="select preghardware from hardware" 
-				cursor.execute(query)
-				todo=cursor.fetchall()
-				cadena="PREGUNTA\n"
-				lista_todo=[]
-				for registro2 in todo:
-					lista_todo.append(registro2)
-					random.shuffle(lista_todo)
-				for registrohardware in lista_todo:
-					cadena+="\n"+registrohardware[0]+"\n\n"
-					print(cadena)
+	contadorhardware = 0
+	for registrohardware in range(1,11):
+		query="select * from hardware where id_resphardware = %(id)s"  
+		cursor.execute(query, { 'id' : registrohardware })
+		todo=cursor.fetchall()
+		lista=[]
+		for registro10 in todo:
+			lista.append(registro10)
+			random.shuffle(lista)
+		for registropreguntas in lista:
+			print(registropreguntas[0])
+		respuesta="select * from respuestashardware where joinhardware = %(id)s"
+		cursor.execute(respuesta , { 'id' : registrohardware })
+		todorespuestas=cursor.fetchall()
+		lista2=[]
+		for registro1010 in todorespuestas:
+			lista2.append(registro1010)
+			random.shuffle(lista2)
+		for respuestas in lista2:
+			print(respuestas[4],respuestas[1],sep=". ")
+			
+		solucion = int(input("Elige número: "))
+		respuestacorrecta = "select * from respuestashardware where joinhardware = %(id)s and soluciones = %(sol)s"
+		cursor.execute(respuestacorrecta, { 'id': registrohardware, 'sol': solucion })
+		numerocorrecto = cursor.fetchone()	
+		print("")
+
+		if numerocorrecto[3] == "v":
+			contadorhardware = contadorhardware + 1
+	
+	print("La nota final es,", contadorhardware)
+	print("")
 					
 def listahistoria():
-				query="select preghistoria from historia" 
-				cursor.execute(query)
-				todo=cursor.fetchall()
-				cadena="PREGUNTA\n"
-				lista_todo=[]
-				for registro3 in todo:
-					lista_todo.append(registro3)
-					random.shuffle(lista_todo)
-				for registrohistoria in lista_todo:
-					cadena+="\n"+registrohistoria[0]+"\n\n"
-					print(cadena)
+	contadorhistoria = 0
+	for registrohistoria in range(1,11):
+		query="select * from historia where idresphistoria = %(id)s"  
+		cursor.execute(query, { 'id' : registrohistoria })
+		todo=cursor.fetchall()
+		lista=[]
+		for registro10 in todo:
+			lista.append(registro10)
+			random.shuffle(lista)
+		for registropreguntas in lista:
+			print(registropreguntas[1])
+		respuesta="select * from respuestashistoria where joinhistoria = %(id)s"
+		cursor.execute(respuesta , { 'id' : registrohistoria })
+		todorespuestas=cursor.fetchall()
+		lista2=[]
+		for registro1010 in todorespuestas:
+			lista2.append(registro1010)
+			random.shuffle(lista2)
+		for respuestas in lista2:
+			print(respuestas[4],respuestas[1],sep=". ")
+			
+		solucion = int(input("Elige número: "))
+		respuestacorrecta = "select * from respuestashistoria where joinhistoria = %(id)s and soluciones = %(sol)s"
+		cursor.execute(respuestacorrecta, { 'id': registrohistoria, 'sol': solucion })
+		numerocorrecto = cursor.fetchone()	
+		print("")
+
+		if numerocorrecto[3] == "v":
+			contadorhistoria = contadorhistoria + 1
+	
+	print("La nota final es,", contadorhistoria)
+	print("")
 					
 def listaredes():
-				query="select pregredes from redes" 
-				cursor.execute(query)
-				todo=cursor.fetchall()
-				cadena="PREGUNTA\n"
-				lista_todo=[]
-				for registro4 in todo:
-					lista_todo.append(registro4)
-					random.shuffle(lista_todo)
-				for registroredes in lista_todo:
-					cadena+="\n"+registroredes[0]+"\n\n"
-					print(cadena)
+	contadorredes = 0
+	for registroredes in range(1,11):
+		query="select * from redes where idrespredes = %(id)s"  
+		cursor.execute(query, { 'id' : registroredes })
+		todo=cursor.fetchall()
+		lista=[]
+		for registro10 in todo:
+			lista.append(registro10)
+			random.shuffle(lista)
+		for registropreguntas in lista:
+			print(registropreguntas[0])
+		respuesta="select * from respuestasredes where joinredes = %(id)s"
+		cursor.execute(respuesta , { 'id' : registroredes })
+		todorespuestas=cursor.fetchall()
+		lista2=[]
+		for registro1010 in todorespuestas:
+			lista2.append(registro1010)
+			random.shuffle(lista2)
+		for respuestas in lista2:
+			print(respuestas[4],respuestas[1],sep=". ")
+			
+		solucion = int(input("Elige número: "))
+		respuestacorrecta = "select * from respuestasredes where joinredes = %(id)s and soluciones = %(sol)s"
+		cursor.execute(respuestacorrecta, { 'id': registroredes, 'sol': solucion })
+		numerocorrecto = cursor.fetchone()	
+		print("")
+
+		if numerocorrecto[3] == "v":
+			contadorredes = contadorredes + 1
+	
+	print("La nota final es,", contadorredes)
+	print("")
 
 		
 def creartema():
@@ -333,12 +396,3 @@ while not salir:
 	else:
 		print ("Introduce un numero entre 1 y 3")
 
-
-#Consulta de respuestas verdaderas de historia
-
-''' 
-select h.idresphistoria , h.preghistoria , r.respuestas
-from respuestashistoria r, historia h
-where h.idresphistoria = joinhistoria
-and correctas_historia = 'v';
-'''
