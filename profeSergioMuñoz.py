@@ -88,20 +88,25 @@ def listaredes():
 					cadena+="\n"+registroredes[0]+"\n\n"
 					print(cadena)
 
-'''				
+		
 def creartema():
-				query="create table" , nuevotema , "(id",nuevotema,"int PRIMARY KEY)"
-				cursor.execute(query)
-				print("Estos serán los temas")
-				print("")
-				query2="show tables"
-				cursor2.execute(query2)
-				todo=cursor.fetchall()
-				cadena="TEMAS\n"
-				for registro9 in todo:
-					cadena+="\n"+registro9[0]+"\n\n"
-					print(cadena)
-'''
+	print("")
+	nuevotema = input("Escribe el nuevo tema: ")
+	print("")
+	query="create table " + nuevotema + "(id" + nuevotema + " int PRIMARY KEY)"
+	cursor.execute(query)
+	conn.commit()
+	print("Estos serán los temas")
+	print("")
+	query2="show tables"
+	cursor.execute(query2)
+	todo=cursor.fetchall()
+	cadena="TEMAS\n"
+	for registro9 in todo:
+		if "respuestas" not in registro9[0]:
+			cadena+="\n"+registro9[0]+"\n\n"
+	print(cadena)
+
 
 salir = False
 opcion = 0
@@ -151,10 +156,9 @@ while not salir:
 		print("2. Añade preguntas y respuestas")
 		opcion2 = numero()
 		if opcion2 == 1:
-			print("")
-			nuevotema = input("Escribe el nuevo tema: ")
 			creartema()
 		if opcion2 == 2:
+			print("")
 			print ("¿Sobre qué tema quieres añadir preguntas?")
 			print("")
 			print ("1. Coches")
@@ -173,22 +177,25 @@ while not salir:
 				respuesta3coches=input("3. Escribe 1 respuesta: ")
 				print("")
 				respuesta4coches=input("4. Escribe 1 respuesta: ")
-				querypreguntascoches="insert into coches values ('preguntacoches')"
+				querypreguntascoches="insert into coches (pregcoches) values ('"+preguntacoches+"')"
 				cursor.execute(querypreguntascoches)
-				conn.commit()
-				queryrespuestascoches1="insert into respuestascoches ('respuestas') values ('respuesta1coches')"
+				queryselect="select count(*) from respuestascoches"
+				cursor.execute(queryselect)
+				todo=cursor.fetchall()
+				contador = int(todo[0][0])
+				contador += 1
+				queryrespuestascoches1="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta1coches +"')"
+				contador += 1
+				queryrespuestascoches2="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta2coches +"')"
+				contador += 1
+				queryrespuestascoches3="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta3coches +"')"
+				contador += 1
+				queryrespuestascoches4="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta4coches +"')"
 				cursor.execute(queryrespuestascoches1)
-				conn.commit()
-				queryrespuestascoches2="insert into respuestascoches ('respuestas') values ('respuesta2coches')"
 				cursor.execute(queryrespuestascoches2)
-				conn.commit()
-				queryrespuestascoches3="insert into respuestascoches ('respuestas') values ('respuesta3coches')"
 				cursor.execute(queryrespuestascoches3)
-				conn.commit()
-				queryrespuestascoches4="insert into respuestascoches ('respuestas') values ('respuesta3coches')"
 				cursor.execute(queryrespuestascoches4)
-				conn.commit()		
-			# Esto es para insert o update para actualizar conectabd.commit()
+				conn.commit()
 			elif añadirpreguntas == 2:
 				print("tema")
 			elif añadirpreguntas == 3:
