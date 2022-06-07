@@ -9,6 +9,7 @@ import random
 conn=MySQLdb.connect(host='localhost',user='profe',passwd='profe',db='testSergio')
 cursor=conn.cursor()
 
+os.system("clear")
 nombre = input("Nombre del alumno: ")
 
 def numero():
