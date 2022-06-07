@@ -20,35 +20,44 @@ def numero():
             num = int(input("Elige una opción: "))
             correcto=True
         except ValueError:
-            print('Error, introduce un numero entero')
-     
+            print('Error, introduce un numero entero')  
     return num
     
 def listacoches():
-				query="select pregcoches from coches" 
-				cursor.execute(query)
-				todo=cursor.fetchall()
-				cadena="PREGUNTA\n"
-				lista_todo=[]
-				for registro1 in todo:
-					lista_todo.append(registro1)
-					random.shuffle(lista_todo)
-				for registrocoches in lista_todo:
-					cadena+="\n"+registrocoches[0]+"\n\n"
-					print(cadena)
-					query2="select respuestas from respuestascoches" 
-					cursor.execute(query2)
-					todo2=cursor.fetchall()
-					cadena2="RESPUESTA\n"
-					lista_todo2=[]
-					for registropreg1 in todo2:
-						lista_todo2.append(registropreg1)
-						random.shuffle(lista_todo2)
-					for registropregcoches in lista_todo2:
-						cadena2+="\n"+registropregcoches[0]+"\n\n"
-						print(cadena2)
-					
-					
+	contador = 0
+	for registrocoches in range(1,10):
+		query="select pregcoches from coches where id_respcoches = %(id)s"  
+		cursor.execute(query, {'id' : registrocoches })
+		todo=cursor.fetchall()
+		lista_todo=[]
+		for registro1 in todo:
+			lista_todo.append(registro1)
+			random.shuffle(lista_todo)
+		for registrocoches in lista_todo:
+			print(registrocoches[0])
+		print ("############################################")
+		respuesta="select respuestas from respuestascoches where idrespcoches = %(id)s "
+		cursor.execute(respuesta , {'id' : })
+		todorespuestas=cursor.fetchall()	
+		for respuestas in todorespuestas:
+			print(respuestas[0])
+			
+		solucion = input("Solucion: ")
+		
+		
+		'''correcta = "SELECT * FROM respuesta_coches WHERE idrespuesta_coches2 = %(id)s and letra_coche = %(sol)s"
+		cursor.execute(correcta, { 'id': i, 'sol': solucion })
+		letracorrecta = cursor.fetchone()
+		print (letracorrecta[4])
+		
+		
+		if letracorrecta[4] == "correcta":
+			cont = cont + 1	'''
+	
+	print ("Su nota total es,", contador)
+	print("")
+
+
 def listahardware():
 				query="select preghardware from hardware" 
 				cursor.execute(query)
@@ -106,18 +115,152 @@ def creartema():
 		if "respuestas" not in registro9[0]:
 			cadena+="\n"+registro9[0]+"\n\n"
 	print(cadena)
+	
+def insertarcoches():
+	print("")
+	preguntacoches=input("Escribe la pregunta a añadir: ")
+	print("")
+	respuesta1coches=input("1. Escribe 1 respuesta: ")
+	print("")
+	respuesta2coches=input("2. Escribe 1 respuesta: ")
+	print("")
+	respuesta3coches=input("3. Escribe 1 respuesta: ")
+	print("")
+	respuesta4coches=input("4. Escribe 1 respuesta: ")
+	querypreguntascoches="insert into coches (pregcoches) values ('"+preguntacoches+"')"
+	cursor.execute(querypreguntascoches)
+	queryselect="select count(*) from respuestascoches"
+	cursor.execute(queryselect)
+	todo=cursor.fetchall()
+	contador = int(todo[0][0])
+	contador += 1
+	queryrespuestascoches1="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta1coches +"')"
+	contador += 1
+	queryrespuestascoches2="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta2coches +"')"
+	contador += 1
+	queryrespuestascoches3="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta3coches +"')"
+	contador += 1
+	queryrespuestascoches4="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta4coches +"')"
+	cursor.execute(queryrespuestascoches1)
+	cursor.execute(queryrespuestascoches2)
+	cursor.execute(queryrespuestascoches3)
+	cursor.execute(queryrespuestascoches4)
+	conn.commit()
+	print("")
+	print("Preguntas y respuestas creadas satisfactoriamente")
+	
+def insertarhardware():
+	print("")
+	preguntahardware=input("Escribe la pregunta a añadir: ")
+	print("")
+	respuestahardware1=input("1. Escribe 1 respuesta: ")
+	print("")
+	respuestahardware2=input("2. Escribe 1 respuesta: ")
+	print("")
+	respuestahardware3=input("3. Escribe 1 respuesta: ")
+	print("")
+	respuestahardware4=input("4. Escribe 1 respuesta: ")
+	querypreguntahardware="insert into hardware (preghardware) values ('"+preguntahardware+"')"
+	cursor.execute(querypreguntahardware)
+	queryselect="select count(*) from respuestashardware"
+	cursor.execute(queryselect)
+	todo=cursor.fetchall()
+	contador = int(todo[0][0])
+	contador += 1
+	queryrespuestahardware1="insert into respuestashardware (idresphardware,respuestas) values (" + str(contador) + ",'"+ respuestahardware1 +"')"
+	contador += 1
+	queryrespuestahardware2="insert into respuestashardware (idresphardware,respuestas) values (" + str(contador) + ",'"+ respuestahardware2 +"')"
+	contador += 1
+	queryrespuestahardware3="insert into respuestashardware (idresphardware,respuestas) values (" + str(contador) + ",'"+ respuestahardware3 +"')"
+	contador += 1
+	queryrespuestahardware4="insert into respuestashardware (idresphardware,respuestas) values (" + str(contador) + ",'"+ respuestahardware4 +"')"
+	cursor.execute(queryrespuestahardware1)
+	cursor.execute(queryrespuestahardware2)
+	cursor.execute(queryrespuestahardware3)
+	cursor.execute(queryrespuestahardware4)
+	conn.commit()
+	print("")
+	print("Preguntas y respuestas creadas satisfactoriamente")
+
+def insertarhistoria():
+	print("")
+	preguntahistoria=input("Escribe la pregunta a añadir: ")
+	print("")
+	respuestahistoria1=input("1. Escribe 1 respuesta: ")
+	print("")
+	respuestahistoria2=input("2. Escribe 1 respuesta: ")
+	print("")
+	respuestahistoria3=input("3. Escribe 1 respuesta: ")
+	print("")
+	respuestahistoria4=input("4. Escribe 1 respuesta: ")
+	querypreguntahistoria="insert into historia (preghistoria) values ('"+preguntahistoria+"')"
+	cursor.execute(querypreguntahistoria)
+	queryselect="select count(*) from respuestashistoria"
+	cursor.execute(queryselect)
+	todo=cursor.fetchall()
+	contador = int(todo[0][0])
+	contador += 1
+	queryrespuestahistoria1="insert into respuestashistoria (idresphistoria,respuestas) values (" + str(contador) + ",'"+ respuestahistoria1 +"')"
+	contador += 1
+	queryrespuestahistoria2="insert into respuestashistoria (idresphistoria,respuestas) values (" + str(contador) + ",'"+ respuestahistoria2 +"')"
+	contador += 1
+	queryrespuestahistoria3="insert into respuestashistoria (idresphistoria,respuestas) values (" + str(contador) + ",'"+ respuestahistoria3 +"')"
+	contador += 1
+	queryrespuestahistoria4="insert into respuestashistoria (idresphistoria,respuestas) values (" + str(contador) + ",'"+ respuestahistoria4 +"')"
+	cursor.execute(queryrespuestahistoria1)
+	cursor.execute(queryrespuestahistoria2)
+	cursor.execute(queryrespuestahistoria3)
+	cursor.execute(queryrespuestahistoria4)
+	conn.commit()
+	print("")
+	print("Preguntas y respuestas creadas satisfactoriamente")
+
+def insertarredes():
+	print("")
+	preguntaredes=input("Escribe la pregunta a añadir: ")
+	print("")
+	respuestaredes1=input("1. Escribe 1 respuesta: ")
+	print("")
+	respuestaredes2=input("2. Escribe 1 respuesta: ")
+	print("")
+	respuestaredes3=input("3. Escribe 1 respuesta: ")
+	print("")
+	respuestaredes4=input("4. Escribe 1 respuesta: ")
+	querypreguntaredes="insert into redes (pregredes) values ('"+preguntaredes+"')"
+	cursor.execute(querypreguntaredes)
+	queryselect="select count(*) from respuestasredes"
+	cursor.execute(queryselect)
+	todo=cursor.fetchall()
+	contador = int(todo[0][0])
+	contador += 1
+	queryrespuestaredes1="insert into respuestasredes (idrespredes,respuestas) values (" + str(contador) + ",'"+ respuestaredes1 +"')"
+	contador += 1
+	queryrespuestaredes2="insert into respuestasredes (idrespredes,respuestas) values (" + str(contador) + ",'"+ respuestaredes2 +"')"
+	contador += 1
+	queryrespuestaredes3="insert into respuestasredes (idrespredes,respuestas) values (" + str(contador) + ",'"+ respuestaredes3 +"')"
+	contador += 1
+	queryrespuestaredes4="insert into respuestasredes (idrespredes,respuestas) values (" + str(contador) + ",'"+ respuestaredes4 +"')"
+	cursor.execute(queryrespuestaredes1)
+	cursor.execute(queryrespuestaredes2)
+	cursor.execute(queryrespuestaredes3)
+	cursor.execute(queryrespuestaredes4)
+	conn.commit()
+	print("")
+	print("Preguntas y respuestas creadas satisfactoriamente")
 
 
 salir = False
 opcion = 0
 
 while not salir:
+	print("")
 	print ("1. Examen")
 	print ("2. Crear test")
 	print ("3. Salir")
 	print ("")
 	opcion = numero()
 	if opcion == 1:
+		print("")
 		print ("Realizaremos un examen")
 		print ("")
 		print ("1. Coches")
@@ -127,36 +270,47 @@ while not salir:
 		print ("")
 		materia = numero()
 		if materia == 1:
+			os.system("clear")
 			print ("")
 			print ("Preparando examen para", nombre ,"del tema de Coches")
 			print ("")
 			listacoches()
-			# Esto es para insert o update para actualizar conectabd.commit()
+			print("")
 		elif materia == 2:
+			os.system("clear")
 			print ("")
 			print ("Preparando examen para ", nombre ,"del tema de Hardware")
 			print ("")
 			listahardware()
+			print("")
 		elif materia == 3:
+			os.system("clear")
 			print ("")
 			print ("Preparando examen para ", nombre ,"del tema de Historia")
 			print ("")
 			listahistoria()
+			print("")
 		elif materia == 4:
+			os.system("clear")
 			print ("")
 			print ("Preparando examen para ", nombre ,"del tema de Redes")
 			print ("")
 			listaredes()
+			print("")
 		else: 
 			print("elige entre los 4 temas con un número entero, pruebe otra vez")
 			salir = True
 	elif opcion == 2:
+		print("")
 		print ("Crearás un nuevo tema o añadirás preguntas y respuestas a un tema existente ")
+		print("")
 		print("1. Crea nuevo tema")
 		print("2. Añade preguntas y respuestas")
 		opcion2 = numero()
 		if opcion2 == 1:
+			print("")
 			creartema()
+			print("")
 		if opcion2 == 2:
 			print("")
 			print ("¿Sobre qué tema quieres añadir preguntas?")
@@ -167,51 +321,17 @@ while not salir:
 			print ("4. Redes")
 			añadirpreguntas = numero()
 			if añadirpreguntas == 1:
-				print("")
-				preguntacoches=input("Escribe la pregunta a añadir: ")
-				print("")
-				respuesta1coches=input("1. Escribe 1 respuesta: ")
-				print("")
-				respuesta2coches=input("2. Escribe 1 respuesta: ")
-				print("")
-				respuesta3coches=input("3. Escribe 1 respuesta: ")
-				print("")
-				respuesta4coches=input("4. Escribe 1 respuesta: ")
-				querypreguntascoches="insert into coches (pregcoches) values ('"+preguntacoches+"')"
-				cursor.execute(querypreguntascoches)
-				queryselect="select count(*) from respuestascoches"
-				cursor.execute(queryselect)
-				todo=cursor.fetchall()
-				contador = int(todo[0][0])
-				contador += 1
-				queryrespuestascoches1="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta1coches +"')"
-				contador += 1
-				queryrespuestascoches2="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta2coches +"')"
-				contador += 1
-				queryrespuestascoches3="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta3coches +"')"
-				contador += 1
-				queryrespuestascoches4="insert into respuestascoches (idrespcoches,respuestas) values (" + str(contador) + ",'"+ respuesta4coches +"')"
-				cursor.execute(queryrespuestascoches1)
-				cursor.execute(queryrespuestascoches2)
-				cursor.execute(queryrespuestascoches3)
-				cursor.execute(queryrespuestascoches4)
-				conn.commit()
+				insertarcoches()
 			elif añadirpreguntas == 2:
-				print("tema")
+				insertarhardware()
 			elif añadirpreguntas == 3:
-				print("tema")
+				insertarhistoria()
 			elif añadirpreguntas == 4:
-				print("tema")
-			 #añadir preguntas y respuestas a un tema ya existente
+				insertarredes()
 	elif opcion == 3:
 		salir = True
 	else:
 		print ("Introduce un numero entre 1 y 3")
-
-# Página respuestas historia https://escuelapce.com/test/historia-de-espana/
-# De la pregunta 11 a la 12 https://buen-saber.com/quiz/historia-de-espana/
-# Página respuestas redes https://cibertest.com/examen-online/580/redes-basico
-# Página respuestas hardware https://cibertest.com/examen-online/2324/partes-de-una-computadora
 
 
 #Consulta de respuestas verdaderas de historia
